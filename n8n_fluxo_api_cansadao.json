@@ -1,0 +1,65 @@
+{
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "e305e5d3-83d2-43bb-8a4e-128c7c223c71",
+      "name": "Webhook do Zap",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        260,
+        340
+      ],
+      "webhookId": "seu_webhook_id_aqui"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://cansadaoapi-sa1o.vercel.app/api/webhook",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "remoteJid",
+              "value": "={{ $json.body.remoteJid }}"
+            },
+            {
+              "name": "chatInput",
+              "value": "={{ $json.body.chatInput || '' }}"
+            },
+            {
+              "name": "base64",
+              "value": "={{ $json.body.base64 || '' }}"
+            },
+            {
+              "name": "openAiKey",
+              "value": "={{ $json.body.openAiKey || '' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "db00e8bc-f80e-4739-813c-cc40ae7693fb",
+      "name": "Manda para Vercel",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        480,
+        340
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook do Zap": {
+      "main": [
+        [
+          {
+            "node": "Manda para Vercel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
